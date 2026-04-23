@@ -176,7 +176,7 @@
         </svg>
       </div>
       <span class="logo-name">金龙红利科技</span>
-      <span class="badge">已发布</span>
+
     </div>
     <div class="header-meta">
       <span>🕐 成立 2025-06-03</span>
@@ -333,12 +333,12 @@
   <div class="card mb20">
     <div class="card-title">阶段收益对比</div>
     <div style="display:flex;gap:8px;margin-bottom:16px">
-      <button class="period-tab active" data-period="week" onclick="switchPeriod('week',this)">本周</button>
+      <button class="period-tab" data-period="week" onclick="switchPeriod('week',this)">本周</button>
       <button class="period-tab" data-period="3m" onclick="switchPeriod('3m',this)">近3个月</button>
       <button class="period-tab" data-period="1y" onclick="switchPeriod('1y',this)">近1年</button>
-      <button class="period-tab" data-period="all" onclick="switchPeriod('all',this)">成立以来</button>
+      <button class="period-tab active" data-period="all" onclick="switchPeriod('all',this)">成立以来</button>
     </div>
-    <div id="period-week" class="period-content active">
+    <div id="period-week" class="period-content">
       <div class="period-compare">
         <div class="pc-item">
           <div class="pc-label">我的组合</div>
@@ -389,7 +389,7 @@
         <div class="pb-track"><div class="pb-fill" style="width:30%;background:#94a3b8"></div></div>
       </div>
     </div>
-    <div id="period-all" class="period-content">
+    <div id="period-all" class="period-content active">
       <div class="period-compare">
         <div class="pc-item">
           <div class="pc-label">我的组合</div>
@@ -411,7 +411,7 @@
   <div class="risk-grid mb20">
     <div class="risk-cell"><div class="risk-label">夏普比率（成立以来）</div><div class="risk-val red">3.0047</div><div class="risk-cmp">沪深300: 0.1029</div></div>
     <div class="risk-cell"><div class="risk-label">最大回撤（成立以来）</div><div class="risk-val muted">25.22%</div><div class="risk-cmp">沪深300: 7.78%</div></div>
-    <div class="risk-cell"><div class="risk-label">本周最大回撤</div><div class="risk-val muted">0.57%</div><div class="risk-cmp">沪深300: 0.64%</div></div>
+    <div class="risk-cell"><div class="risk-label">最新净值</div><div class="risk-val blue">1.7450</div><div class="risk-cmp">成立以来 +74.50%</div></div>
     <div class="risk-cell"><div class="risk-label">累计收益（成立以来）</div><div class="risk-val red">+74.50%</div><div class="risk-cmp">沪深300: +23.14%</div></div>
   </div>
 
