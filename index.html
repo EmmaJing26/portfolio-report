@@ -69,7 +69,7 @@
   .banner-week{font-size:11px;opacity:.75;margin-bottom:4px}
   .banner-ret{font-size:36px;font-weight:800;letter-spacing:-1px}
   .banner-sub{font-size:12px;opacity:.9;margin-top:6px}
-  .banner-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
+  .banner-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
   .bs-label{font-size:10px;opacity:.7}
   .bs-val{font-size:16px;font-weight:700;margin-top:2px}
   @media(min-width:768px){.banner{padding:26px 28px;border-radius:14px;margin-bottom:20px}.banner-week{font-size:12px}.banner-ret{font-size:44px;letter-spacing:-1.5px}.banner-sub{font-size:13px}.banner-stats{display:flex;flex-wrap:wrap;gap:28px}.bs-val{font-size:18px}}
@@ -184,20 +184,20 @@
 <div id="tab-overview" class="tab-content active"><div class="page">
 
   <div class="banner mb20">
-    <div class="banner-week">本周区间收益率（2026.04.14 – 2026.04.19）&nbsp;·&nbsp; 基准：沪深300</div>
+    <div class="banner-week">本周区间收益率（2026.04.14 – 2026.04.19）</div>
     <div class="banner-ret">+7.29%</div>
-    <div class="banner-sub">本周超额收益 <strong>+4.39%</strong>&nbsp;·&nbsp; 基准：沪深300</div>
+    <div class="banner-sub">超额收益 <strong>+4.39%</strong>（基准沪深300）</div>
     <div class="banner-stats">
       <div><div class="bs-label">累计收益（成立以来）</div><div class="bs-val">+74.50%</div></div>
-      <div><div class="bs-label">最新净值</div><div class="bs-val">1.7450</div></div>
+      <div><div class="bs-label">跑赢基准（沪深300）</div><div class="bs-val">+51.36%</div></div>
       <div><div class="bs-label">夏普比率（成立以来）</div><div class="bs-val">3.0047</div></div>
-      <div><div class="bs-label">累计超额沪深300（成立以来）</div><div class="bs-val">+51.36%</div></div>
     </div>
   </div>
 
-  <div class="kpi-row">
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
     <div class="kpi"><div class="kpi-label">仓位占比</div><div class="kpi-value blue">58.52%</div><div class="kpi-sub">股票仓位</div></div>
     <div class="kpi"><div class="kpi-label">持仓股票</div><div class="kpi-value muted">9只</div><div class="kpi-sub">历史建仓62只</div></div>
+    <div class="kpi"><div class="kpi-label">运行天数</div><div class="kpi-value muted">487天</div><div class="kpi-sub">成立以来</div></div>
   </div>
 
   <div class="grid-2 mb20" style="margin-top:20px">
