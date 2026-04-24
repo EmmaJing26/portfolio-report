@@ -332,13 +332,13 @@
   <div class="card mb20">
     <div class="card-title">阶段收益对比</div>
     <div style="display:flex;gap:8px;margin-bottom:16px">
-      <button class="period-tab" data-period="week" onclick="switchPeriod('week',this)">本周</button>
+      <button class="period-tab active" data-period="week" onclick="switchPeriod('week',this)">本周</button>
       <button class="period-tab" data-period="3m" onclick="switchPeriod('3m',this)">近3个月</button>
       <button class="period-tab" data-period="1y" onclick="switchPeriod('1y',this)">近1年</button>
-      <button class="period-tab active" data-period="all" onclick="switchPeriod('all',this)">成立以来</button>
+      <button class="period-tab" data-period="all" onclick="switchPeriod('all',this)">成立以来</button>
     </div>
     
-    <div id="period-week" class="period-content class="active"">
+    <div id="period-week" class="period-content active">
       <div class="period-compare">
         <div class="pc-item">
           <div class="pc-label">我的组合</div>
@@ -356,25 +356,7 @@
       </div>
     </div>
 
-    <div id="period-month" class="period-content">
-      <div class="period-compare">
-        <div class="pc-item">
-          <div class="pc-label">我的组合</div>
-          <div class="pc-value red">+12.50%</div>
-        </div>
-        <div class="pc-vs">VS</div>
-        <div class="pc-item">
-          <div class="pc-label">沪深300</div>
-          <div class="pc-value muted">+4.20%</div>
-        </div>
-      </div>
-      <div class="period-bar">
-        <div class="pb-track"><div class="pb-fill" style="width:100%;background:var(--red)"></div></div>
-        <div class="pb-track"><div class="pb-fill" style="width:33.6%;background:#94a3b8"></div></div>
-      </div>
-    </div>
-
-    <div id="period-quarter" class="period-content">
+    <div id="period-3m" class="period-content">
       <div class="period-compare">
         <div class="pc-item">
           <div class="pc-label">我的组合</div>
@@ -392,25 +374,7 @@
       </div>
     </div>
 
-    <div id="period-half_year" class="period-content">
-      <div class="period-compare">
-        <div class="pc-item">
-          <div class="pc-label">我的组合</div>
-          <div class="pc-value red">+45.60%</div>
-        </div>
-        <div class="pc-vs">VS</div>
-        <div class="pc-item">
-          <div class="pc-label">沪深300</div>
-          <div class="pc-value muted">+12.30%</div>
-        </div>
-      </div>
-      <div class="period-bar">
-        <div class="pb-track"><div class="pb-fill" style="width:100%;background:var(--red)"></div></div>
-        <div class="pb-track"><div class="pb-fill" style="width:26.973684210526315%;background:#94a3b8"></div></div>
-      </div>
-    </div>
-
-    <div id="period-year" class="period-content">
+    <div id="period-1y" class="period-content">
       <div class="period-compare">
         <div class="pc-item">
           <div class="pc-label">我的组合</div>
@@ -428,7 +392,7 @@
       </div>
     </div>
 
-    <div id="period-since_incept" class="period-content">
+    <div id="period-all" class="period-content">
       <div class="period-compare">
         <div class="pc-item">
           <div class="pc-label">我的组合</div>
