@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金龙红利科技 · 组合周报</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary:#1a56db; --primary-light:#e8f0fe;
+    --red:#e63946; --green:#2dc653;
+    --gray-50:#f8fafc; --gray-100:#f1f5f9; --gray-200:#e2e8f0;
+    --gray-400:#94a3b8; --gray-600:#475569; --gray-800:#1e293b;
+    --border:#e2e8f0;
+    --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+    --shadow-h:0 4px 16px rgba(0,0,0,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif;background:var(--gray-50);color:var(--gray-800);font-size:15px;line-height:1.6}
+
+  /* Header */
+  .header{background:#fff;border-bottom:1px solid var(--border);padding:0 16px;position:sticky;top:0;z-index:100}
+  .header-inner{max-width:480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+  .logo{display:flex;align-items:center;gap:8px}
+  .logo-mark{width:32px;height:32px;background:linear-gradient(135deg,#1a56db,#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .logo-mark svg{width:16px;height:16px}
+  .logo-name{font-size:16px;font-weight:700}
+  .header-meta{display:none}
+  @media(min-width:768px){.header{padding:0 32px}.header-inner{max-width:1160px;height:60px}.header-meta{display:flex;gap:20px;font-size:12px;color:var(--gray-400)}.logo-mark{width:34px;height:34px}.logo-mark svg{width:18px;height:18px}.logo-name{font-size:17px}}
+
+  /* Tabs */
+  .tabs-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;position:sticky;top:56px;z-index:99;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+  .tabs-inner{max-width:480px;margin:0 auto;display:flex;justify-content:space-around}
+  .tab-btn{padding:12px 14px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--gray-600);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:all .18s;flex:1;text-align:center}
+  .tab-btn:hover{color:var(--primary)}
+  .tab-btn.active{color:var(--primary);border-bottom-color:var(--primary)}
+  .tab-content{display:none}
+  .tab-content.active{display:block;animation:fadeUp .25s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @media(min-width:768px){.tabs-bar{padding:0 32px;top:60px}.tabs-inner{max-width:1160px;justify-content:flex-start}.tab-btn{padding:14px 18px;font-size:13px;flex:none}}
+
+  /* Page */
+  .page{max-width:480px;margin:0 auto;padding:16px}
+  @media(min-width:768px){.page{max-width:1160px;padding:24px 32px}}
+
+  /* Card */
+  .card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow);transition:box-shadow .2s;margin-bottom:16px}
+  .card:hover{box-shadow:var(--shadow-h)}
+  .card-title{font-size:15px;font-weight:600;color:var(--gray-800);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+  .card-title::before{content:"";width:3px;height:14px;background:var(--primary);border-radius:2px;display:inline-block}
+  @media(min-width:768px){.card{padding:22px;border-radius:12px;margin-bottom:0}.card-title{font-size:14px;margin-bottom:16px}}
+
+  /* Grid */
+  .grid-2{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:768px){.grid-2{grid-template-columns:1fr 1fr;gap:18px}}
+
+  /* KPI */
+  .kpi-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+  .kpi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 12px;text-align:center;box-shadow:var(--shadow)}
+  .kpi-label{font-size:11px;color:var(--gray-400);font-weight:500;margin-bottom:6px}
+  .kpi-value{font-size:22px;font-weight:700;line-height:1.2}
+  .kpi-sub{font-size:10px;color:var(--gray-400);margin-top:3px}
+  .red{color:var(--red)}.green{color:var(--green)}.blue{color:var(--primary)}.muted{color:var(--gray-600)}
+  @media(min-width:768px){.kpi-row{grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.kpi{padding:18px 16px;border-radius:12px}.kpi-value{font-size:24px}.kpi-sub{font-size:11px}}
+
+  /* Banner */
+  .banner{background:linear-gradient(135deg,#1a56db 0%,#3b82f6 100%);color:#fff;border-radius:16px;padding:22px 20px;margin-bottom:16px}
+  .banner-week{font-size:11px;opacity:.75;margin-bottom:4px}
+  .banner-ret{font-size:36px;font-weight:800;letter-spacing:-1px}
+  .banner-sub{font-size:12px;opacity:.9;margin-top:6px}
+  .banner-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.2)}
+  .bs-label{font-size:10px;opacity:.7}
+  .bs-val{font-size:16px;font-weight:700;margin-top:2px}
+  @media(min-width:768px){.banner{padding:26px 28px;border-radius:14px;margin-bottom:20px}.banner-week{font-size:12px}.banner-ret{font-size:44px;letter-spacing:-1.5px}.banner-sub{font-size:13px}.banner-stats{display:flex;flex-wrap:wrap;gap:28px}.bs-val{font-size:18px}}
+
+  /* Table */
+  .tbl{width:100%;border-collapse:collapse;font-size:13px}
+  .tbl th{padding:10px 8px;text-align:left;font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.02em;border-bottom:1px solid var(--border);background:var(--gray-50);white-space:nowrap}
+  .tbl td{padding:10px 8px;border-bottom:1px solid var(--border);font-size:12px;white-space:nowrap}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl tr:hover td{background:var(--gray-50)}
+  .tbl td:first-child{font-weight:600}
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -18px;padding:0 18px}
+  @media(min-width:768px){.tbl{font-size:13px}.tbl th{padding:9px 12px;font-size:11px;letter-spacing:.04em}.tbl td{padding:11px 12px;font-size:13px}.tbl-wrap{margin:0;padding:0}}
+
+  /* Image */
+  .img-block{border-radius:12px;overflow:hidden;border:1px solid var(--border);width:100%}
+  .img-block img{width:100%;display:block}
+
+  /* Donut */
+  .donut-row{display:flex;flex-direction:row;align-items:center;gap:12px}
+  .donut-canvas{width:100px;height:100px;flex-shrink:0}
+  .legend{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:6px 12px}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:12px}
+  .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .leg-name{flex:1;color:var(--gray-600)}
+  .leg-pct{font-weight:600}
+  @media(min-width:768px){.donut-row{gap:24px}.donut-canvas{width:140px;height:140px}.legend{grid-template-columns:repeat(2,1fr);gap:8px 16px}.legend-item{font-size:13px}.dot{width:9px;height:9px}}
+
+  /* Rebalance */
+  .rb-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+  .rb-item:last-child{border-bottom:none}
+  .rb-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .rb-body{flex:1;min-width:0}
+  .rb-name{font-weight:600;font-size:15px}
+  .rb-op{font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;display:inline-block;margin:5px 0}
+  .op-buy{background:#fef2f2;color:var(--red)}
+  .op-sell{background:#f0fdf4;color:#166534}
+  .op-reduce{background:#fefce8;color:#854d0e}
+  .rb-detail{font-size:12px;color:var(--gray-600);line-height:1.5}
+  .rb-reason{font-size:11px;color:var(--gray-400);margin-top:4px;line-height:1.4}
+  .rb-right{text-align:right;flex-shrink:0;min-width:70px}
+  .rb-pos{font-size:14px;font-weight:700}
+  @media(min-width:768px){.rb-item{gap:14px;padding:16px 0}.rb-icon{width:34px;height:34px;border-radius:8px;font-size:16px}.rb-name{font-size:14px}.rb-op{padding:2px 7px;margin:4px 0}.rb-detail{line-height:1.6}.rb-reason{font-size:12px}.rb-pos{font-size:13px}}
+
+  /* Stock cards */
+  .stock-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  .sc{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow);transition:box-shadow .2s}
+  .sc:hover{box-shadow:var(--shadow-h)}
+  .sc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+  .sc-name{font-size:16px;font-weight:700}
+  .sc-code{font-size:11px;color:var(--gray-400);margin-top:2px}
+  .sc-price{text-align:right}
+  .sc-pval{font-size:22px;font-weight:700}
+  .sc-pchg{font-size:13px;font-weight:600}
+  .sc-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .sc-m{background:var(--gray-50);border-radius:8px;padding:10px 6px;text-align:center}
+  .sc-m-label{font-size:10px;color:var(--gray-400)}
+  .sc-m-val{font-size:13px;font-weight:600;margin-top:3px}
+  .tag{display:inline-block;font-size:11px;padding:3px 8px;border-radius:4px;font-weight:500}
+  .tag-hold{background:var(--primary-light);color:var(--primary)}
+  .tag-new{background:#fef9ec;color:#b45309}
+  .news-item{padding:10px 0;border-bottom:1px solid var(--border)}
+  .news-item:last-child{border-bottom:none}
+  .news-title{font-size:13px;color:var(--gray-800);line-height:1.5}
+  .news-meta{font-size:11px;color:var(--gray-400);margin-top:3px}
+  @media(min-width:768px){.stock-grid{grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}.sc{border-radius:12px;padding:18px}.sc-name{font-size:15px}.sc-pval{font-size:21px}.sc-pchg{font-size:12px}.sc-m{padding:7px}.sc-m-val{font-size:12px}.news-title{font-size:12px}}
+
+  /* Risk */
+  .risk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .risk-cell{background:var(--gray-50);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+  .risk-label{font-size:10px;color:var(--gray-400);margin-bottom:6px;font-weight:500}
+  .risk-val{font-size:18px;font-weight:700}
+  .risk-cmp{font-size:10px;color:var(--gray-400);margin-top:4px}
+  @media(min-width:768px){.risk-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}.risk-cell{padding:16px;border-radius:10px}.risk-label{font-size:11px;margin-bottom:7px}.risk-val{font-size:22px}.risk-cmp{font-size:11px;margin-top:5px}}
+
+  /* Period Tabs */
+  .period-tab{padding:8px 16px;border:1px solid var(--border);background:#fff;border-radius:20px;font-size:13px;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all .2s}
+  .period-tab:hover{border-color:var(--primary);color:var(--primary)}
+  .period-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .period-content{display:none;padding:10px 0}
+  .period-content.active{display:block;animation:fadeUp .25s ease}
+  .period-compare{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+  .pc-item{text-align:center;flex:1}
+  .pc-label{font-size:12px;color:var(--gray-400);margin-bottom:6px}
+  .pc-value{font-size:28px;font-weight:700}
+  .pc-vs{font-size:11px;color:var(--gray-400);font-weight:600;background:var(--gray-50);padding:4px 10px;border-radius:12px}
+  .period-bar{display:flex;flex-direction:column;gap:8px}
+  .pb-track{height:8px;background:var(--gray-100);border-radius:4px;overflow:hidden}
+  .pb-fill{height:100%;border-radius:4px;transition:width .5s ease}
+
+  .disclaimer{background:var(--gray-50);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:12px;color:var(--gray-600);line-height:1.8}
+  .mb20{margin-bottom:20px}.mb16{margin-bottom:16px}
+  .footer{text-align:center;padding:24px 16px;color:var(--gray-400);font-size:12px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 17 8 12 13 16 18 9 21 12"/>
+        </svg>
+      </div>
+      <span class="logo-name">金龙红利科技</span>
+    </div>
+    <div class="header-meta">
+      <span>🕐 成立 2025-06-03</span>
+      <span>📅 运行 325天</span>
+      <span>💰 总资产 355.74万</span>
+      <span>🔄 数据截至 2026-04-23</span>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="go('overview',this)">📊 本周概览</button>
+    <button class="tab-btn" onclick="go('performance',this)">📈 历史业绩</button>
+    <button class="tab-btn" onclick="go('holdings',this)">💼 持仓分析</button>
+  </div>
+</nav>
+
+<!-- ── 概览 ── -->
+<div id="tab-overview" class="tab-content active"><div class="page">
+
+  <div class="banner mb20">
+    <div class="banner-week">本周区间收益率（2026.04.15 – 2026.04.23）</div>
+    <div class="banner-ret">+5.56%</div>
+    <div class="banner-sub">超额收益 <strong>+3.75%</strong>（基准沪深300）</div>
+    <div class="banner-stats">
+      <div><div class="bs-label">累计收益（成立以来）</div><div class="bs-val">+77.87%</div></div>
+      <div><div class="bs-label">跑赢基准（沪深300）</div><div class="bs-val">+53.23%</div></div>
+      <div><div class="bs-label">夏普比率（成立以来）</div><div class="bs-val">3.0891</div></div>
+    </div>
+  </div>
+
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi"><div class="kpi-label">仓位占比</div><div class="kpi-value blue">60.20%</div><div class="kpi-sub">股票仓位</div></div>
+    <div class="kpi"><div class="kpi-label">持仓股票</div><div class="kpi-value muted">9只</div><div class="kpi-sub">历史建仓62只</div></div>
+    <div class="kpi"><div class="kpi-label">运行天数</div><div class="kpi-value muted">325天</div><div class="kpi-sub">2025-06-03成立</div></div>
+  </div>
+
+  <div class="grid-2 mb20" style="margin-top:20px">
+    <div class="card">
+      <div class="card-title">本周区间收益率（2026.04.15 – 2026.04.23）</div>
+      <div class="img-block"><img src="data:image/png;base64,PGJpbmFyeV9pbWFnZV9kYXRhPg==" alt="本周区间收益率折线图"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">行业持仓分布</div>
+      <div class="donut-row" style="flex-direction:row;align-items:center">
+        <div class="donut-canvas" style="width:100px;height:100px;flex-shrink:0"><canvas id="sectorChart"></canvas></div>
+        <div class="legend" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px 12px">
+          <div class="legend-item"><div class="dot" style="background:#3b82f6"></div><div class="leg-name">电子</div><div class="leg-pct red">31.51%</div></div>
+<div class="legend-item"><div class="dot" style="background:#8b5cf6"></div><div class="leg-name">通信</div><div class="leg-pct red">20.72%</div></div>
+<div class="legend-item"><div class="dot" style="background:#f59e0b"></div><div class="leg-name">石油石化</div><div class="leg-pct muted">18.03%</div></div>
+<div class="legend-item"><div class="dot" style="background:#6b7280"></div><div class="leg-name">煤炭</div><div class="leg-pct muted">11.05%</div></div>
+<div class="legend-item"><div class="dot" style="background:#10b981"></div><div class="leg-name">有色金属</div><div class="leg-pct muted">10.56%</div></div>
+<div class="legend-item"><div class="dot" style="background:#ec4899"></div><div class="leg-name">医药生物</div><div class="leg-pct muted">8.14%</div></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb20">
+    <div class="card-title">本周调仓（2026.04.20 – 2026.04.23）</div>
+    
+    <div class="rb-item">
+      <div class="rb-icon" style="background:#f0fdf4">🔴</div>
+      <div class="rb-body">
+        <div class="rb-name">天孚通信 <span style="color:var(--gray-400);font-size:11px">300394.SZ</span></div>
+        <span class="rb-op op-sell">卖出清仓</span>
+        <div class="rb-detail">成交价 345.0 元 · 500股 · 2026-04-23 13:00</div>
+        <div class="rb-reason">📌 清仓止盈</div>
+      </div>
+      <div class="rb-right">
+        <div style="font-size:10px;color:var(--gray-400)">仓位变化</div>
+        <div class="rb-pos green">4.87% → 0.00%</div>
+      </div>
+    </div>
+
+    <div class="rb-item">
+      <div class="rb-icon" style="background:#fef2f2">🟢</div>
+      <div class="rb-body">
+        <div class="rb-name">工业富联 <span style="color:var(--gray-400);font-size:11px">601138.SH</span></div>
+        <span class="rb-op op-buy">买入建仓</span>
+        <div class="rb-detail">成交价 67.92 元 · 3000股 · 2026-04-23 10:34</div>
+        <div class="rb-reason">📌 公司将在AI服务器规格持续迁移，Rubin Ultra和Feynman架构下，AI服务器出货量有望持续增长</div>
+      </div>
+      <div class="rb-right">
+        <div style="font-size:10px;color:var(--gray-400)">仓位变化</div>
+        <div class="rb-pos red">0.00% → 5.74%</div>
+      </div>
+    </div>
+
+    <div class="rb-item">
+      <div class="rb-icon" style="background:#f0fdf4">🔴</div>
+      <div class="rb-body">
+        <div class="rb-name">协创数据 <span style="color:var(--gray-400);font-size:11px">300857.SZ</span></div>
+        <span class="rb-op op-sell">卖出清仓</span>
+        <div class="rb-detail">成交价 306.23 元 · 300股 · 2026-04-20 09:50</div>
+        <div class="rb-reason">📌 清仓止盈</div>
+      </div>
+      <div class="rb-right">
+        <div style="font-size:10px;color:var(--gray-400)">仓位变化</div>
+        <div class="rb-pos green">2.64% → 0.00%</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="card-title">投顾观点</div>
+    <p style="color:var(--gray-600);line-height:1.9;font-size:13px">
+      创业板改革新政将长期重塑市场生态，资金将持续向'高研发、高成长、未盈利但前景明确'的新质生产力企业集中，关注半导体、新能源材料、AI应用、创新药、光通信等赛道。短期市场或延续'成长领涨、权重震荡'格局。
+    </p>
+    <div style="margin-top:10px;font-size:11px;color:var(--gray-400)">最近更新：2026-04-23</div>
+  </div>
+
+</div></div>
+
+<!-- ── 历史业绩 ── -->
+<div id="tab-performance" class="tab-content"><div class="page">
+
+  <div class="card mb20">
+    <div class="card-title">净值曲线 vs 沪深300</div>
+    <div style="font-size:12px;color:var(--gray-400);margin-bottom:12px">2025-06-03 至 2026-04-23</div>
+    <div class="img-block"><img src="data:image/png;base64,PGJpbmFyeV9pbWFnZV9kYXRhPg==" alt="净值走势图"></div>
+  </div>
+
+  <div class="card mb20">
+    <div class="card-title">阶段收益对比</div>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button class="period-tab" data-period="week" onclick="switchPeriod('week',this)">本周</button>
+      <button class="period-tab" data-period="3m" onclick="switchPeriod('3m',this)">近3个月</button>
+      <button class="period-tab" data-period="1y" onclick="switchPeriod('1y',this)">近1年</button>
+      <button class="period-tab active" data-period="all" onclick="switchPeriod('all',this)">成立以来</button>
+    </div>
+    
+    <div id="period-week" class="period-content">
+      <div class="period-compare">
+        <div class="pc-item">
+          <div class="pc-label">我的组合</div>
+          <div class="pc-value red">+5.56%</div>
+        </div>
+        <div class="pc-vs">VS</div>
+        <div class="pc-item">
+          <div class="pc-label">沪深300</div>
+          <div class="pc-value muted">+1.81%</div>
+        </div>
+      </div>
+      <div class="period-bar">
+        <div class="pb-track"><div class="pb-fill" style="width:100%;background:var(--red)"></div></div>
+        <div class="pb-track"><div class="pb-fill" style="width:33%;background:#94a3b8"></div></div>
+      </div>
+    </div>
+
+    <div id="period-3m" class="period-content">
+      <div class="period-compare">
+        <div class="pc-item">
+          <div class="pc-label">我的组合</div>
+          <div class="pc-value red">+18.92%</div>
+        </div>
+        <div class="pc-vs">VS</div>
+        <div class="pc-item">
+          <div class="pc-label">沪深300</div>
+          <div class="pc-value muted">+5.31%</div>
+        </div>
+      </div>
+      <div class="period-bar">
+        <div class="pb-track"><div class="pb-fill" style="width:100%;background:var(--red)"></div></div>
+        <div class="pb-track"><div class="pb-fill" style="width:28%;background:#94a3b8"></div></div>
+      </div>
+    </div>
+
+    <div id="period-1y" class="period-content">
+      <div class="period-compare">
+        <div class="pc-item">
+          <div class="pc-label">我的组合</div>
+          <div class="pc-value red">+42.18%</div>
+        </div>
+        <div class="pc-vs">VS</div>
+        <div class="pc-item">
+          <div class="pc-label">沪深300</div>
+          <div class="pc-value muted">+12.45%</div>
+        </div>
+      </div>
+      <div class="period-bar">
+        <div class="pb-track"><div class="pb-fill" style="width:100%;background:var(--red)"></div></div>
+        <div class="pb-track"><div class="pb-fill" style="width:30%;background:#94a3b8"></div></div>
+      </div>
+    </div>
+
+    <div id="period-all" class="period-content active">
+      <div class="period-compare">
+        <div class="pc-item">
+          <div class="pc-label">我的组合</div>
+          <div class="pc-value red">+77.87%</div>
+        </div>
+        <div class="pc-vs">VS</div>
+        <div class="pc-item">
+          <div class="pc-label">沪深300</div>
+          <div class="pc-value muted">+24.64%</div>
+        </div>
+      </div>
+      <div class="period-bar">
+        <div class="pb-track"><div class="pb-fill" style="width:100%;background:var(--red)"></div></div>
+        <div class="pb-track"><div class="pb-fill" style="width:32%;background:#94a3b8"></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="risk-grid mb20">
+    <div class="risk-cell"><div class="risk-label">夏普比率（成立以来）</div><div class="risk-val red">3.0891</div><div class="risk-cmp">沪深300: 0.1077</div></div>
+    <div class="risk-cell"><div class="risk-label">最大回撤（成立以来）</div><div class="risk-val muted">25.22%</div><div class="risk-cmp">沪深300: 7.78%</div></div>
+    <div class="risk-cell"><div class="risk-label">最新净值</div><div class="risk-val blue">1.7787</div><div class="risk-cmp">成立以来 +77.87%</div></div>
+    <div class="risk-cell"><div class="risk-label">累计收益（成立以来）</div><div class="risk-val red">+77.87%</div><div class="risk-cmp">沪深300: +24.64%</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">风险提示</div>
+    <div class="disclaimer">
+      ⚠️ <strong>本组合内容仅供参考，不构成投资建议。</strong><br>
+      股票市场存在较大风险，历史业绩不代表未来收益。投资者应根据自身风险承受能力独立决策。<br>
+      本组合为主动管理型策略，持仓集中度较高，适合风险承受能力较强的投资者。
+    </div>
+  </div>
+
+</div></div>
+
+<!-- ── 持仓分析 ── -->
+<div id="tab-holdings" class="tab-content"><div class="page">
+
+  <div class="card mb20">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div class="card-title" style="margin-bottom:0">持仓明细</div>
+      <div style="font-size:12px;color:var(--gray-400)">仓位 <b style="color:var(--gray-800)">60.20%</b> · 持股 <b style="color:var(--gray-800)">9只</b></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="tbl">
+      <thead><tr><th>证券名称</th><th>代码</th><th>仓位</th><th>持有收益率</th><th>最新价</th><th>成本价</th><th>收益贡献</th></tr></thead>
+      <tbody>
+        <tr><td>中国海油</td><td style="color:var(--gray-400)">600938.SH</td><td>10.87%</td><td class="green">-5.02%</td><td>38.53</td><td>40.57</td><td class="green">-2.04万</td></tr>
+<tr><td>源杰科技</td><td style="color:var(--gray-400)">688498.SH</td><td>7.98%</td><td class="red">+115.30%</td><td>1413.88</td><td>656.69</td><td class="red">+15.14万</td></tr>
+<tr><td>中际旭创</td><td style="color:var(--gray-400)">300308.SZ</td><td>7.67%</td><td class="red">+92.65%</td><td>905.42</td><td>469.98</td><td class="red">+13.06万</td></tr>
+<tr><td>中国神华</td><td style="color:var(--gray-400)">601088.SH</td><td>6.66%</td><td class="red">+2.64%</td><td>47.2</td><td>45.98</td><td class="red">+6081.04</td></tr>
+<tr><td>云南锗业</td><td style="color:var(--gray-400)">002428.SZ</td><td>6.36%</td><td class="red">+74.63%</td><td>75.09</td><td>43.0</td><td class="red">+9.63万</td></tr>
+<tr><td>工业富联</td><td style="color:var(--gray-400)">601138.SH</td><td>5.55%</td><td class="green">-3.52%</td><td>65.55</td><td>67.94</td><td class="green">-7171.13</td></tr>
+<tr><td>东山精密</td><td style="color:var(--gray-400)">002384.SZ</td><td>5.37%</td><td class="red">+133.65%</td><td>190.34</td><td>81.47</td><td class="red">+10.89万</td></tr>
+<tr><td>康龙化成</td><td style="color:var(--gray-400)">300759.SZ</td><td>4.93%</td><td class="green">-5.21%</td><td>29.12</td><td>30.72</td><td class="green">-9595.28</td></tr>
+<tr><td>新易盛</td><td style="color:var(--gray-400)">300502.SZ</td><td>4.74%</td><td class="red">+53.70%</td><td>560.01</td><td>364.36</td><td class="red">+5.87万</td></tr>
+
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div style="margin-bottom:12px;color:var(--gray-400);font-size:12px">📡 实时行情数据：2026-04-23 收盘 &nbsp;|&nbsp; 数据来源：NeoData</div>
+
+  <div class="stock-grid">
+    
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">中国海油</div><div class="sc-code">600938.SH · 石油石化</div></div>
+        <div class="sc-price"><div class="sc-pval red">38.53</div><div class="sc-pchg red">+0.52% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val red">+2.31%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+8.45%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val green">-5.02%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 10.87%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">国际油价震荡上行，油气板块受益</div><div class="news-meta">2026-04-22</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">源杰科技</div><div class="sc-code">688498.SH · 通信</div></div>
+        <div class="sc-price"><div class="sc-pval red">1413.88</div><div class="sc-pchg red">+3.21% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val red">+8.45%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+156.30%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val red">+115.30%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 7.98%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">光模块需求持续旺盛，龙头业绩超预期</div><div class="news-meta">2026-04-21</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">中际旭创</div><div class="sc-code">300308.SZ · 通信</div></div>
+        <div class="sc-price"><div class="sc-pval red">905.42</div><div class="sc-pchg red">+2.85% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val red">+6.72%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+98.50%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val red">+92.65%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 7.67%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">800G光模块订单饱满，产能持续爬坡</div><div class="news-meta">2026-04-20</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">中国神华</div><div class="sc-code">601088.SH · 煤炭</div></div>
+        <div class="sc-price"><div class="sc-pval red">47.2</div><div class="sc-pchg red">+0.85% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val red">+1.92%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+12.30%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val red">+2.64%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 6.66%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">动力煤价格企稳，高股息策略受青睐</div><div class="news-meta">2026-04-19</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">云南锗业</div><div class="sc-code">002428.SZ · 有色金属</div></div>
+        <div class="sc-price"><div class="sc-pval red">75.09</div><div class="sc-pchg red">+1.25% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val red">+5.43%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+124.80%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val red">+74.63%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 6.36%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">锗价持续上涨，半导体材料需求旺盛</div><div class="news-meta">2026-04-22</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">工业富联</div><div class="sc-code">601138.SH · 电子</div></div>
+        <div class="sc-price"><div class="sc-pval green">65.55</div><div class="sc-pchg green">-0.85% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val green">-1.23%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+45.60%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val green">-3.52%</div></div>
+      </div>
+      <span class="tag tag-new">新建 5.55%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">AI服务器业务高增长，GB200量产在即</div><div class="news-meta">2026-04-23</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">东山精密</div><div class="sc-code">002384.SZ · 电子</div></div>
+        <div class="sc-price"><div class="sc-pval red">190.34</div><div class="sc-pchg red">+2.15% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val red">+7.82%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+178.90%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val red">+133.65%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 5.37%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">PCB龙头业绩亮眼，AI服务器配套放量</div><div class="news-meta">2026-04-21</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">康龙化成</div><div class="sc-code">300759.SZ · 医药生物</div></div>
+        <div class="sc-price"><div class="sc-pval green">29.12</div><div class="sc-pchg green">-1.25% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val green">-2.85%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val green">-8.50%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val green">-5.21%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 4.93%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">CXO板块承压，创新药投融资回暖</div><div class="news-meta">2026-04-20</div></div>
+
+      </div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-head">
+        <div><div class="sc-name">新易盛</div><div class="sc-code">300502.SZ · 通信</div></div>
+        <div class="sc-price"><div class="sc-pval red">560.01</div><div class="sc-pchg red">+1.85% </div></div>
+      </div>
+      <div class="sc-metrics">
+        <div class="sc-m"><div class="sc-m-label">5日涨幅</div><div class="sc-m-val red">+4.56%</div></div>
+        <div class="sc-m"><div class="sc-m-label">年初至今</div><div class="sc-m-val red">+89.20%</div></div>
+        <div class="sc-m"><div class="sc-m-label">持仓收益</div><div class="sc-m-val red">+53.70%</div></div>
+      </div>
+      <span class="tag tag-hold">持仓 4.74%</span>
+      <div style="margin-top:10px">
+        <div class="news-item"><div class="news-title">光模块出口订单增长，产能利用率提升</div><div class="news-meta">2026-04-22</div></div>
+
+      </div>
+    </div>
+
+  </div>
+</div></div>
+
+<footer class="footer">
+  <div>金龙红利科技组合 · 数据截至 2026-04-23 &nbsp;|&nbsp; 行情数据 2026-04-23</div>
+  <div>本内容仅供参考，不构成投资建议 &nbsp;|&nbsp; 市场有风险，投资需谨慎</div>
+</footer>
+
+<script>
+function go(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function switchPeriod(period, btn) {
+  document.querySelectorAll('.period-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.period-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('period-' + period).classList.add('active');
+  btn.classList.add('active');
+}
+
+// 行业持仓分布环形图
+new Chart(document.getElementById('sectorChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ["电子","通信","石油石化","煤炭","有色金属","医药生物"],
+    datasets: [{
+      data: [31.51,20.72,18.03,11.05,10.56,8.14],
+      backgroundColor: ["#3b82f6","#8b5cf6","#f59e0b","#6b7280","#10b981","#ec4899"],
+      borderWidth: 0,
+      cutout: '65%'
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => ` ${c.label}: ${c.raw}%` } }
+    }
+  }
+});
+</script>
+</body>
+</html>
