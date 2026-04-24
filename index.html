@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>金龙红利科技 - 周报汇总</title>
+  <title>{{PORTFOLIO_NAME}} - 周报汇总</title>
   <style>
     :root {
       --primary: #1e3a8a;
@@ -167,49 +167,19 @@
 <body>
 
   <header>
-    <h1>金龙红利科技</h1>
-    <div class="subtitle">投资组合周报汇总 &nbsp;·&nbsp; 成立日期 2025-06-03 &nbsp;·&nbsp; 共 1 期</div>
+    <h1>{{PORTFOLIO_NAME}}</h1>
+    <div class="subtitle">投资组合周报汇总 &nbsp;·&nbsp; 成立日期 {{FOUND_DATE}} &nbsp;·&nbsp; 共 {{REPORT_COUNT}} 期</div>
   </header>
 
   <div class="container">
     <div class="report-grid">
-      
-      <div class="report-card">
-        <div class="card-banner">
-          <div class="week-label">2026.04.15 - 2026.04.23 &nbsp;·&nbsp; 2026年04月23日 周报</div>
-          <div class="portfolio-name">金龙红利科技</div>
-          <div class="stats-row">
-            <div class="stat-item">
-              <div class="stat-val pos">+5.56%</div>
-              <div class="stat-lbl">本周收益</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-val pos">+77.87%</div>
-              <div class="stat-lbl">累计收益</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-val pos">+53.23%</div>
-              <div class="stat-lbl">超额收益</div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span>数据截至 2026-04-23</span>
-            <span>运行 325 天</span>
-          </div>
-          <a class="card-link" href="reports/2026-04-23.html" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            查看完整周报
-          </a>
-        </div>
-      </div>
+      {{REPORT_LIST}}
     </div>
   </div>
 
   <footer>
     <p>数据仅供参考，不构成投资建议</p>
-    <p>最后更新：2026年04月24日 13:26</p>
+    <p>最后更新：{{UPDATE_TIME}}</p>
   </footer>
 
 </body>
