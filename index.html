@@ -8,139 +8,209 @@
     :root {
       --primary: #1e3a8a;
       --primary-light: #3b82f6;
-      --bg: #f5f7fa;
+      --bg: #f0f4f8;
       --card-bg: #fff;
       --text: #1f2937;
       --text-secondary: #6b7280;
       --border: #e5e7eb;
-      --success: #dc2626;
-      --danger: #16a34a;
+      --red: #dc2626;
+      --green: #16a34a;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      min-height: 100vh;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+
+    /* ── 顶部 Header ── */
     header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
       color: white;
-      padding: 40px 20px;
+      padding: 40px 20px 36px;
       text-align: center;
-      margin-bottom: 30px;
     }
     header h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
     }
-    header p {
-      opacity: 0.9;
-      font-size: 16px;
+    header .subtitle {
+      font-size: 14px;
+      opacity: 0.75;
+      letter-spacing: 0.5px;
     }
-    .latest-report {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+    /* ── 主体容器 ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 16px 48px;
     }
-    .latest-report h2 {
-      font-size: 20px;
-      margin-bottom: 16px;
-      color: var(--primary);
-    }
-    .latest-report iframe {
-      width: 100%;
-      height: 600px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-    .history-section {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .history-section h2 {
-      font-size: 20px;
-      margin-bottom: 20px;
-      color: var(--primary);
-    }
-    .report-list {
+
+    /* ── 卡片网格 ── */
+    .report-grid {
       display: grid;
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
-    .report-item {
+
+    /* ── 单期周报卡片 ── */
+    .report-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .report-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(30,58,138,0.15);
+    }
+
+    /* 蓝色头部 */
+    .card-banner {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
+      color: white;
+      padding: 20px 20px 16px;
+    }
+    .card-banner .week-label {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+    .card-banner .portfolio-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .card-banner .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .card-banner .stat-item {
+      text-align: center;
+    }
+    .card-banner .stat-val {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .card-banner .stat-val.pos { color: #fca5a5; }
+    .card-banner .stat-val.neg { color: #86efac; }
+    .card-banner .stat-lbl {
+      font-size: 10px;
+      opacity: 0.65;
+      margin-top: 2px;
+    }
+
+    /* 白色底部 */
+    .card-body {
+      padding: 14px 20px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .card-link {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      background: var(--bg);
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.2s;
-    }
-    .report-item:hover {
-      background: #e8ecf1;
-      transform: translateX(4px);
-    }
-    .report-date {
+      justify-content: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      border-radius: 8px;
+      padding: 9px 0;
+      font-size: 13px;
       font-weight: 600;
-      font-size: 16px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      cursor: pointer;
     }
-    .report-return {
-      font-size: 18px;
-      font-weight: 700;
+    .card-link:hover { opacity: 0.88; }
+    .card-link svg {
+      width: 14px; height: 14px;
+      fill: none; stroke: currentColor; stroke-width: 2.2;
+      stroke-linecap: round; stroke-linejoin: round;
     }
-    .report-return.positive { color: var(--success); }
-    .report-return.negative { color: var(--danger); }
+
+    /* ── footer ── */
     footer {
       text-align: center;
-      padding: 40px 20px;
+      padding: 0 0 32px;
       color: var(--text-secondary);
-      font-size: 14px;
+      font-size: 12px;
+      line-height: 2;
     }
-    @media (max-width: 768px) {
-      header h1 { font-size: 24px; }
-      .latest-report iframe { height: 400px; }
-      .report-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 22px; }
+      .report-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>金龙红利科技</h1>
-    <p>投资组合周报汇总 | 成立日期：2025-06-03 | 共 1 期周报</p>
+    <div class="subtitle">投资组合周报汇总 &nbsp;·&nbsp; 成立日期 2025-06-03 &nbsp;·&nbsp; 共 1 期</div>
   </header>
 
   <div class="container">
-    <section class="latest-report">
-      <h2>📊 最新周报</h2>
-      <iframe src="reports/2026-04-19.html" title="最新周报"></iframe>
-    </section>
-
-    <section class="history-section">
-      <h2>📚 历史周报</h2>
-      <div class="report-list">
-        
-        <a href="reports/2026-04-19.html" class="report-item">
-          <span class="report-date">2026年04月19日 周报</span>
-          <span class="report-return positive">+7.29%</span>
-        </a>
+    <div class="report-grid">
+      
+      <div class="report-card">
+        <div class="card-banner">
+          <div class="week-label">04.14 - 04.19 &nbsp;&middot;&nbsp; 2026年04月19日 周报</div>
+          <div class="portfolio-name">金龙红利科技</div>
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-val pos">+7.29%</div>
+              <div class="stat-lbl">本周收益</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val pos">+74.50%</div>
+              <div class="stat-lbl">累计收益</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val pos">+4.39%</div>
+              <div class="stat-lbl">超额收益</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span>数据截至 2026-04-19</span>
+            <span>运行 320 天</span>
+          </div>
+          <a class="card-link" href="reports/2026-04-19.html" target="_blank">
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            查看完整周报
+          </a>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 
   <footer>
     <p>数据仅供参考，不构成投资建议</p>
-    <p>最后更新：2026年04月24日 09:59</p>
+    <p>最后更新：2026年04月24日 10:03</p>
   </footer>
+
 </body>
 </html>
