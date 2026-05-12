@@ -18,205 +18,112 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* ── 顶部 Header ── */
-    header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
-      color: white;
-      padding: 40px 20px 36px;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    header .subtitle {
-      font-size: 14px;
-      opacity: 0.75;
-      letter-spacing: 0.5px;
-    }
-
-    /* ── 主体容器 ── */
-    .container {
-      max-width: 960px;
+      padding: 20px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 28px 16px 48px;
     }
-
-    /* ── 卡片网格 ── */
-    .report-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    /* ── 单期周报卡片 ── */
-    .report-card {
-      background: var(--card-bg);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-    }
-    .report-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(30,58,138,0.15);
-    }
-
-    /* 蓝色头部 */
-    .card-banner {
-      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
-      color: white;
-      padding: 20px 20px 16px;
-    }
-    .card-banner .week-label {
-      font-size: 12px;
-      opacity: 0.7;
-      margin-bottom: 4px;
-      letter-spacing: 0.5px;
-    }
-    .card-banner .portfolio-name {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-    .card-banner .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .card-banner .stat-item {
+    .header {
       text-align: center;
+      padding: 30px 0 20px;
     }
-    .card-banner .stat-val {
-      font-size: 18px;
-      font-weight: 800;
-      line-height: 1.2;
+    .header h1 {
+      font-size: 22px;
+      color: var(--primary);
+      margin-bottom: 6px;
     }
-    .card-banner .stat-val.pos { color: #fca5a5; }
-    .card-banner .stat-val.neg { color: #86efac; }
-    .card-banner .stat-lbl {
-      font-size: 10px;
-      opacity: 0.65;
-      margin-top: 2px;
+    .header p {
+      font-size: 13px;
+      color: var(--text-secondary);
     }
-
-    /* 白色底部 */
-    .card-body {
-      padding: 14px 20px 16px;
-      flex: 1;
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 24px 0 12px;
+    }
+    .report-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .card-meta {
+    .report-item {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 16px 20px;
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-    .card-link {
-      display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      color: white;
-      border-radius: 8px;
-      padding: 9px 0;
-      font-size: 13px;
-      font-weight: 600;
       text-decoration: none;
-      transition: opacity 0.15s;
-      cursor: pointer;
+      color: var(--text);
+      border: 1px solid var(--border);
+      transition: box-shadow 0.15s;
     }
-    .card-link:hover { opacity: 0.88; }
-    .card-link svg {
-      width: 14px; height: 14px;
-      fill: none; stroke: currentColor; stroke-width: 2.2;
-      stroke-linecap: round; stroke-linejoin: round;
+    .report-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-
-    /* ── footer ── */
-    footer {
+    .report-item.latest {
+      border-color: var(--primary-light);
+      background: linear-gradient(135deg, #eff6ff 0%, #fff 100%);
+    }
+    .report-item.latest .report-date::after {
+      content: "最新";
+      background: var(--primary-light);
+      color: white;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-left: 8px;
+    }
+    .report-date {
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .report-return {
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .positive { color: var(--red); }
+    .negative { color: var(--green); }
+    .footer {
       text-align: center;
-      padding: 0 0 32px;
-      color: var(--text-secondary);
       font-size: 12px;
-      line-height: 2;
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 22px; }
-      .report-grid { grid-template-columns: 1fr; }
+      color: var(--text-secondary);
+      margin-top: 32px;
+      padding-bottom: 20px;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>金龙红利科技</h1>
-    <div class="subtitle">投资组合周报汇总 &nbsp;·&nbsp; 成立日期 2025-06-03 &nbsp;·&nbsp; 共 2 期</div>
-  </header>
-
-  <div class="container">
-    <div class="report-grid">
-          <a class="report-card" href="reports/2026-04-24.html">
-      <div class="card-banner">
-        <div class="week-label">第 3 期 · 2026.04.20 – 2026.04.24</div>
-        <div class="portfolio-name">金龙红利科技</div>
-        <div class="stats-row">
-          <div class="stat-item"><div class="stat-val pos">+5.28%</div><div class="stat-lbl">本周收益</div></div>
-          <div class="stat-item"><div class="stat-val pos">+76.42%</div><div class="stat-lbl">累计收益</div></div>
-          <div class="stat-item"><div class="stat-val">3.01</div><div class="stat-lbl">夏普比率</div></div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>9只持仓</span><span>仓位 59.96%</span></div>
-        <div class="card-link">
-          查看周报
-          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </div>
-      </div>
-    </a>
-    <a class="report-card" href="reports/2026-04-19.html">
-      <div class="card-banner">
-        <div class="week-label">第 2 期 · 2026.04.13 – 2026.04.19</div>
-        <div class="portfolio-name">金龙红利科技</div>
-        <div class="stats-row">
-          <div class="stat-item"><div class="stat-val pos">+4.52%</div><div class="stat-lbl">本周收益</div></div>
-          <div class="stat-item"><div class="stat-val pos">+72.80%</div><div class="stat-lbl">累计收益</div></div>
-          <div class="stat-item"><div class="stat-val">2.95</div><div class="stat-lbl">夏普比率</div></div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>10只持仓</span><span>仓位 62.15%</span></div>
-        <div class="card-link">
-          查看周报
-          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </div>
-      </div>
-    </a>
-
-    </div>
+  <div class="header">
+    <h1>📊 金龙红利科技</h1>
+    <p>成立于 2025-06-03 · 投资组合周报汇总</p>
   </div>
-
-  <footer>
-    <p>数据仅供参考，不构成投资建议</p>
-    <p>最后更新：2026-04-24</p>
-  </footer>
-
+  
+  <div class="section-title">历史周报</div>
+  <div class="report-list">
+    <a href="reports/2026-05-11.html" class="report-item latest">
+      <div class="report-date">2026年05月11日周报</div>
+      <div class="report-return positive">+3.63%</div>
+    </a>
+    <a href="reports/2026-04-24.html" class="report-item">
+      <div class="report-date">2026年04月24日周报</div>
+      <div class="report-return positive">+5.28%</div>
+    </a>
+    <a href="reports/2026-04-23.html" class="report-item">
+      <div class="report-date">2026年04月23日周报</div>
+      <div class="report-return positive">+5.56%</div>
+    </a>
+    <a href="reports/2026-04-19.html" class="report-item">
+      <div class="report-date">2026年04月19日周报</div>
+      <div class="report-return positive">+7.29%</div>
+    </a>
+  </div>
+  
+  <div class="footer">数据来源：模拟投顾平台 · 本报告仅供参考</div>
 </body>
 </html>
